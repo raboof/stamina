@@ -3,6 +3,9 @@ package object stamina {
   /** Type alias for Akka's ByteSttring so we don't have to import it everywhere. */
   type ByteString = akka.util.ByteString
   val ByteString = akka.util.ByteString
+
+  implicit def nonEmptyStringToKey(in: String): Key = macro KeyMacro.nonEmptyStringToKey
+  implicit def keytoString(key: Key): String = key.value
 }
 
 package stamina {
@@ -19,6 +22,22 @@ package stamina {
    * }
    */
   trait Persistable extends java.io.Serializable
+
+  case class Key(value: String) {
+    def getUtf8Bytes: Array[Byte] = value.getBytes(java.nio.charset.StandardCharsets.UTF_8)
+    override def toString = value
+  }
+
+  object KeyMacro {
+    import scala.reflect.macros.Context
+
+    def nonEmptyStringToKey(c: Context)(in: c.Expr[String]): c.Expr[Key] = {
+      import c.universe._
+      val q"${ s: String }" = q"${in}"
+      if (s.isEmpty) c.abort(c.enclosingPosition, s"Persistence keys must be non-empty!")
+      else c.Expr[Key](q"Key($in)")
+    }
+  }
 
   import scala.util.control._
 

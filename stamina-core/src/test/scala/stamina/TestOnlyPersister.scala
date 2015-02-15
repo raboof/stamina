@@ -9,7 +9,7 @@ object TestOnlyPersister {
   private val javaSerializer = new JavaSerializer(system.asInstanceOf[ExtendedActorSystem])
   import javaSerializer._
 
-  def persister[T <: AnyRef: ClassTag](key: String): Persister[T, V1] = new JavaPersister[T](key)
+  def persister[T <: AnyRef: ClassTag](key: Key): Persister[T, V1] = new JavaPersister[T](key)
 
   private class JavaPersister[T <: AnyRef: ClassTag](key: String) extends Persister[T, V1](key) {
     def persist(t: T): Persisted = Persisted(key, currentVersion, toBinary(t))

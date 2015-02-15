@@ -61,7 +61,7 @@ package object json {
    * and unpersist version 1. Use this function to produce the initial persister
    * for a new domain class/event/entity.
    */
-  def persister[T: RootJsonFormat: ClassTag](key: String): JsonPersister[T, V1] = new V1JsonPersister[T](key)
+  def persister[T: RootJsonFormat: ClassTag](key: Key): JsonPersister[T, V1] = new V1JsonPersister[T](key)
 
   /**
    * Creates a JsonPersister[T, V] where V is a version greater than V1.
@@ -69,7 +69,7 @@ package object json {
    * JsonMigrator[V] to migrate any values older than version V to version V before
    * unpersisting them.
    */
-  def persister[T: RootJsonFormat: ClassTag, V <: Version: VersionInfo: Migratable](key: String, migrator: JsonMigrator[V]): JsonPersister[T, V] = new VnJsonPersister[T, V](key, migrator)
+  def persister[T: RootJsonFormat: ClassTag, V <: Version: VersionInfo: Migratable](key: Key, migrator: JsonMigrator[V]): JsonPersister[T, V] = new VnJsonPersister[T, V](key, migrator)
 
   private[json] def toJsonBytes[T](t: T)(implicit writer: RootJsonWriter[T]): ByteString = ByteString(writer.write(t).compactPrint)
   private[json] def fromJsonBytes[T](bytes: ByteString)(implicit reader: RootJsonReader[T]): T = reader.read(parseJson(bytes))
