@@ -39,6 +39,20 @@ package stamina {
     }
   }
 
+  // TODO: the value must be a literal too! Otherwise the macro won't work!
+  // def ensureValidStringLiteral(c: Context)(value: c.Expr[String], notValidMsg: String, notLiteralMsg: String)(isValid: String => Boolean): Unit = {
+  //   import c.universe._
+
+  //   value.tree match {
+  //     case Literal(stringConst) =>
+  //       val literalValue = stringConst.value.toString
+  //       if (!isValid(literalValue))
+  //         c.abort(c.enclosingPosition, notValidMsg)
+  //     case _ =>
+  //       c.abort(c.enclosingPosition, notLiteralMsg)
+  //   }
+  // }
+
   import scala.util.control._
 
   case class UnregisteredTypeException(obj: AnyRef)
