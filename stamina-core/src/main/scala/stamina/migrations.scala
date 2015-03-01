@@ -1,6 +1,8 @@
 package stamina
 
 package object migrations {
+  import versions.V1
+
   /**
    * A Migration[T] is a simple type alias for a function that takes a T
    * and produces another T, usually the input value transformed in some way

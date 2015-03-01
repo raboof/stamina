@@ -4,6 +4,7 @@ import scala.reflect.ClassTag
 import spray.json._
 
 import migrations._
+import versions._
 
 /**
  * An implementation of the stamina Persister that will use spray-json

@@ -1,11 +1,14 @@
 package stamina
 package json
 
-class JsonPersisterSpec extends StaminaJsonSpec {
-  import JsonTestDomain._
-  import SprayJsonMacros._
-  import spray.json.lenses.JsonLenses._
+import spray.json.lenses.JsonLenses._
 
+import JsonTestDomain._
+import SprayJsonMacros._
+
+import versions._
+
+class JsonPersisterSpec extends StaminaJsonSpec {
   val v1CartCreatedPersister = persister[CartCreatedV1]("cart-created")
 
   val v2CartCreatedPersister = persister[CartCreatedV2, V2]("cart-created",

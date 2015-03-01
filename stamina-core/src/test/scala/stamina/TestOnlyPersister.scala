@@ -4,6 +4,8 @@ import scala.reflect._
 import akka.actor._
 import akka.serialization._
 
+import versions._
+
 object TestOnlyPersister {
   private val system = ActorSystem("TestOnlyPersister")
   private val javaSerializer = new JavaSerializer(system.asInstanceOf[ExtendedActorSystem])
